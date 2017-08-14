@@ -8,12 +8,17 @@ def generar_documento_pago(parametros):
     user_data = autenticar_tuleap(parametros)
     parametros["user_data"] = user_data
     membership = get_membership_tuleap(parametros)
+    project_shortname_cache = []
 
     for project_membership in membership:
         project_shortname = project_membership[:project_membership.find(project_string_key)]
         # print "Proyecto "+project_shortname
-        project_info = get_project_info_tuleap(parametros, project_shortname)
-        pprint.pprint(project_info)
+        if not any(project_shortname in s for s in project_shortname_cache):
+            project_shortname_cache.append(project_shortname)
+            project_info = get_project_info_tuleap(parametros, project_shortname)
+            if len(project_info) > 0:
+                project_info = project_info[0]
+            pprint.pprint(project_info)
     # user_id = response+["user_id"]
     # token   = response["token"]
     # uri     = response["uri"]

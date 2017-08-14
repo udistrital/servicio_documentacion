@@ -13,5 +13,6 @@ setup(name='servicio_documentacion',
           'flask',
           'Jinja2',
           'jinja2_markdown',
+          'requests',
       ],
       zip_safe=False)
