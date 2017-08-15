@@ -42,3 +42,14 @@ def get_project_info_tuleap(parametros, project_shortname):
     project_info = request.json()
     # pprint.pprint(project_info)
     return project_info
+
+def send_comment_tuleap(parametros, comentario, tracker_id):
+    payload = {}
+    payload.type = "text"
+    payload.body = comentario
+    request_headers = {"Content-type" : "application/json",
+    "X-Auth-Token":str(parametros["user_data"]["token"]),
+    "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
+    request_url = parametros["url_base"]+"artifacts/"+str(tracker_id)
+    request = requests.put(url=request_url, headers=request_headers, data=json.dumps(payload))
+    return request.status_code
