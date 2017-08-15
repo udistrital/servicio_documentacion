@@ -51,7 +51,5 @@ def send_comment_tuleap(parametros, comentario, tracker_id):
     "X-Auth-Token":str(parametros["user_data"]["token"]),
     "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
     request_url = parametros["url_base"]+"artifacts/"+str(tracker_id)
-    # requests_params = {"shortname":project_shortname}
     request = requests.put(url=request_url, headers=request_headers, data=json.dumps(payload))
-    # pprint.pprint(project_info)
     return request.status_code
