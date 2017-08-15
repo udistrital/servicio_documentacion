@@ -21,9 +21,9 @@ def get_repos_by_username(parametros):
 def get_commits_by_reponame(parametros, reponame):
     request_headers = {"Content-type" : "application/json"}
     request_url = parametros["url_base"]+"repos/"+parametros["username"]+"/"+reponame+"/commits"
-
+    request_params = {}
     for criteria in ["since", "until", "sha", "author", "path"]:
-        if(parametros[criteria] != None):
+        if criteria in parametros:
             request_params[criteria] = parametros[criteria]
 
     request = requests.get(url=request_url, headers=request_headers, params=request_params)
