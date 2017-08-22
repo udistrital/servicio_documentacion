@@ -1,0 +1,17 @@
+{% markdown -%}
+# Análisis​ ​Calendario​ ​Tributario
+
+
+## Arquitectura​ ​de​ ​Información
+
+
+## Diagramas​ ​de​ ​flujo​ ​BPMN
+
+
+## Modelo​ ​de​ ​Datos
+{% for tabla in data.tablas %}
+![alt text]({{data.data_dictionary_server+"/"+data.schema+tabla.nombre}} "")
+{% endfor -%}
+## Prototipos
+
+{% endmarkdown -%}
