@@ -32,6 +32,40 @@ def get_trackers_tuleap(parametros, project_id):
     # pprint.pprint(project_trackers)
     return project_trackers
 
+def get_tracker_info_tuleap(parametros, tracker_id):
+    request_headers = {"Content-type" : "application/json",
+    "X-Auth-Token":str(parametros["user_data"]["token"]),
+    "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
+    request_url = parametros["url_base_tuleap"]+"trackers/"+str(tracker_id)+""
+    # requests_params = {"shortname":project_shortname}
+    request = requests.get(url=request_url, headers=request_headers)
+    tracker_info = request.json()
+    # pprint.pprint(tracker_info)
+    return tracker_info
+
+def get_tracker_artifacts(parametros, tracker_id):
+    request_headers = {"Content-type" : "application/json",
+    "X-Auth-Token":str(parametros["user_data"]["token"]),
+    "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
+    request_url = parametros["url_base_tuleap"]+"trackers/"+str(tracker_id)+"/artifacts"
+    requests_params = {"query":json.dumps(parametros["query"])}
+    #requests_params = {"query":json.dumps({"artifact_id":"14919"})}
+    #requests_params = {"query":build_query_object(parametros["query"], tracker_id)}
+    request = requests.get(url=request_url, headers=request_headers, params=requests_params)
+    print("Peticion " + request.url)
+    tracker_artifacts = request.json()
+    # pprint.pprint(tracker_artifacts)
+    return tracker_artifacts
+
+def build_query_object(query, tracker_id):
+    tracker_info = get_tracker_info_tuleap(parametros, str(tracker_id))
+    query_object = {}
+    for field in tracker_info["fields"]:
+        if field["name"] in query:
+            query_object[field["field_id"]] = query[field["name"]]
+    # pprint.pprint(tracker_artifacts)
+    return query_object
+
 def get_project_info_tuleap(parametros, project_shortname):
     request_headers = {"Content-type" : "application/json",
     "X-Auth-Token":str(parametros["user_data"]["token"]),
