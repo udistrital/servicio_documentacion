@@ -47,8 +47,11 @@ def get_tracker_artifacts(parametros, tracker_id):
     request_headers = {"Content-type" : "application/json",
     "X-Auth-Token":str(parametros["user_data"]["token"]),
     "X-Auth-UserId":str(parametros["user_data"]["user_id"])}
-    request_url = parametros["url_base_tuleap"]+"trackers/"+str(tracker_id)+"/artifacts"
-    requests_params = {"query":json.dumps(parametros["query"])}
+    request_url = parametros["url_base_tuleap"]+"trackers/"+str(tracker_id)+"/artifacts?limit=1000&order=desc"
+    if "query" in parametros:
+        requests_params = {"query":json.dumps(parametros["query"])}
+    else:
+        requests_params = {}
     #requests_params = {"query":json.dumps({"artifact_id":"14919"})}
     #requests_params = {"query":build_query_object(parametros["query"], tracker_id)}
     request = requests.get(url=request_url, headers=request_headers, params=requests_params)

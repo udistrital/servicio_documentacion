@@ -14,6 +14,6 @@ setup(name='servicio_documentacion',
           'Jinja2',
           'jinja2_markdown',
           'requests',
-          'PyGithub',
+          'iso8601',
       ],
       zip_safe=False)

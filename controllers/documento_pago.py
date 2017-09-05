@@ -1,6 +1,6 @@
 
 import pprint
-import tuleap_api
+from controllers import tuleap_api, utils
 
 def generar_documento_pago(parametros):
     parametros["url_base_tuleap"]="https://tuleap.udistrital.edu.co/api/"
@@ -26,7 +26,8 @@ def generar_documento_pago(parametros):
         for tracker in trackers:
             #pprint.pprint(str(tracker['id']) + str(tracker['item_name']))
             artifacts = tuleap_api.get_tracker_artifacts(parametros, str(tracker['id']))
-            pprint.pprint(artifacts)
+            #pprint.pprint(artifacts)
+            pprint.pprint(utils.filter_json_array(artifacts, parametros["query_filter"]))
         contador_proyectos = contador_proyectos + 1
         print("Porcentaje de proyectos escaneados " + str(contador_proyectos*100/len(project_member_info)) + "%")
     return None
