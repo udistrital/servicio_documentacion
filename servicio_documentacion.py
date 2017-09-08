@@ -5,10 +5,14 @@ from flask_api import status
 app = Flask(__name__)
 
 
-# @app.route('/documento_mensual/informe_gestion', methods=['GET'])
-# def generar_informe_gestion():
-# 	parametros = request.get_json()
-#     return generar_documento_pago(parametros)
+@app.route('/documento_mensual/informe_gestion', methods=['GET'])
+def generar_informe_gestion():
+	# parametros = request.get_json()
+	# actividades = generar_documento_pago(parametros)
+	try:
+		return render_template('informe_gestion/template_informe_gestion.html')
+	except:
+		return "No generado", status.HTTP_404_NOT_FOUND
 
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
@@ -42,7 +46,7 @@ def generar_cumplido():
 	try:
 		return render_template('cumplido/template_cumplido.html', usuario=usuario_data, jefe=jefe_data)
 	except:
-		return "", status.HTTP_404_NOT_FOUND
+		return "No generado", status.HTTP_404_NOT_FOUND
 
 
 if __name__ == '__main__':
