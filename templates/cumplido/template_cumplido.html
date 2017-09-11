@@ -22,23 +22,23 @@
     <p class="paragraph">
         El {{usuario.rotulo}}.
         <uppb>{{usuario.nombre_completo}}</uppb>, identificado con la {{usuario.documento.tipo}} No.
-        <currency>{{usuario.documento.numero}}</currency> de {{usuario.documento.ciudad}}, cumplió a satisfacción con el objeto establecido en el <b>Contrato de Prestación de Servicios No.</b> 598 de 07 de Febrero de 2017 que tiene disponibilidad presupuestal No.
-        804 del 01 de Febrero de 2017, certificado de registro presupuestal No. 630 del 10 de Febrero de 2017 y con el pago reglamentario de los aportes al sistema de seguridad social del
+        <currency>{{usuario.documento.numero}}</currency> de {{usuario.documento.ciudad}}, cumplió a satisfacción con el objeto establecido en el <b>Contrato de Prestación de Servicios No.</b> {{usuario.contrato.numero}} de {{usuario.contrato.fecha}} que tiene disponibilidad presupuestal No.
+        {{usuario.contrato.cdp.numero}} del {{usuario.contrato.cdp.fecha}}, certificado de registro presupuestal No. {{usuario.contrato.rp.numero}} del {{usuario.contrato.rp.fecha}} y con el pago reglamentario de los aportes al sistema de seguridad social del
         <b>1 al 30 de agosto de 2017.</b></p>
 
     <p class="paragraph">Con afectación a la fuente de financiamiento Distribución Punto Adicional CREE</p>
     <p class="paragraph">
         Que el valor causado por este concepto, es la suma de
-        <uppb>{{usuario.valor_mensual.formato_letras}} pesos MCTE. (</uppb>
+        <uppb>{{valor_letras(usuario.valor_mensual.formato_moneda)}} pesos MCTE. (</uppb>
         <b>{{usuario.valor_mensual.formato_moneda}}</b>
-        <b></b><b>)</b>, comprendido del {{usuario.dia_inicial}} al {{usuario.dia_final}} <span>de</span>
-        <span>{{usuario.mes}}</span> del año en curso.</p>
+        <b></b><b>)</b>, comprendido del {{informe.dia_inicial}} al {{informe.dia_final}} <span>de</span>
+        <span>{{informe.mes}}</span> del año en curso.</p>
     <p class="paragraph">
 
     </p>
     <p class="paragraph"><b><uppb>Cuenta {{usuario.cuenta.tipo}}:</uppb> No. {{usuario.cuenta.numero}} del BANCO <uppb>{{usuario.cuenta.banco}}</uppb></b></p>
 
-    <p class="paragraph">Se expide para el trámite de pago ante la <b>DIVISION DE RECURSOS FINANCIEROS </b>a los treinta (30) días del mes de {{usuario.mes}} de 2017.</p>
+    <p class="paragraph">Se expide para el trámite de pago ante la <b>DIVISION DE RECURSOS FINANCIEROS </b>a los treinta (30) días del mes de {{informe.mes}} de 2017.</p>
 
     <br/>
     <p class="subtitle">

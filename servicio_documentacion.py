@@ -2,9 +2,11 @@ from flask import Flask, render_template, request, jsonify
 from controllers import documento_pago, numero_a_letras
 from flask_api import status
 import pprint
+import sys
+
  
 app = Flask(__name__)
-
+app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
 
 @app.route('/documento_mensual/informe_gestion', methods=['POST'])
 def generar_informe_gestion():
@@ -56,9 +58,11 @@ def generar_cumplido():
 	usuario_data = {}
 	usuario_data["rotulo"]="Sr"
 	usuario_data["nombre_completo"]="Fabio Andres Parra Fuentes"
-	usuario_data["dia_inicial"]="01"
-	usuario_data["dia_final"]="30"
-	usuario_data["mes"]="Agosto"
+	
+	informe_data = {}
+	informe_data["dia_inicial"]="01"
+	informe_data["dia_final"]="30"
+	informe_data["mes"]="Agosto"
 
 	usuario_data["documento"]={}
 	usuario_data["documento"]["tipo"]="Cedula de Ciudadania"
@@ -67,9 +71,7 @@ def generar_cumplido():
 
 	usuario_data["valor_mensual"]={}
 	usuario_data["valor_mensual"]["formato_moneda"]=3579000
-	usuario_data["valor_mensual"]["formato_letras"]= numero_a_letras.numero_a_letras(usuario_data["valor_mensual"]["formato_moneda"])
-
-	
+		
 	usuario_data["cuenta"]={}
 	usuario_data["cuenta"]["tipo"]="Ahorros"
 	usuario_data["cuenta"]["numero"]="692-111222-87"
@@ -79,11 +81,10 @@ def generar_cumplido():
 	jefe_data["nombre_completo"]="Beatriz Jaramillo"
 	jefe_data["cargo"]="Jefe Asesora de Sistemas"
 
-	try:
-		return render_template('cumplido/template_cumplido.html', usuario=usuario_data, jefe=jefe_data)
-	except:
-		return "No generado", status.HTTP_404_NOT_FOUND
+	
+	return render_template('cumplido/template_cumplido.html', usuario=usuario_data, jefe=jefe_data, informe=informe_data)
+	
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run( debug=True)
