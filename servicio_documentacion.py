@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-from controllers import documento_pago
+from controllers import documento_pago, numero_a_letras
 from flask_api import status
 import pprint
-
+ 
 app = Flask(__name__)
 
 
@@ -36,8 +36,9 @@ def generar_cumplido():
 	usuario_data["documento"]["ciudad"]="Bogota"
 
 	usuario_data["valor_mensual"]={}
-	usuario_data["valor_mensual"]["formato_letras"]="Valor en letras"
-	usuario_data["valor_mensual"]["formato_moneda"]="3579000"
+	usuario_data["valor_mensual"]["formato_moneda"]=3579000
+	usuario_data["valor_mensual"]["formato_letras"]= numero_a_letras.numero_a_letras(usuario_data["valor_mensual"]["formato_moneda"])
+
 	
 	usuario_data["cuenta"]={}
 	usuario_data["cuenta"]["tipo"]="Ahorros"
@@ -45,7 +46,7 @@ def generar_cumplido():
 	usuario_data["cuenta"]["banco"]="Bancolombia"
 
 	jefe_data={}
-	jefe_data["nombre_completo"]="Beatriz Algo"
+	jefe_data["nombre_completo"]="Beatriz Jaramillo"
 	jefe_data["cargo"]="Jefe Asesora de Sistemas"
 
 	try:
