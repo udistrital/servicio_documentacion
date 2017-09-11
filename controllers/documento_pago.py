@@ -20,6 +20,7 @@ def generar_documento_pago(parametros):
                 project_member_info.append(project_info[0])
         # pprint.pprint(project_member_info)
     contador_proyectos = 0
+    final_artifacts = []
     for project in project_member_info:
         trackers = tuleap_api.get_trackers_tuleap(parametros, project["id"])
         pprint.pprint("Escaneando " + str(project['shortname']))
@@ -27,7 +28,7 @@ def generar_documento_pago(parametros):
             #pprint.pprint(str(tracker['id']) + str(tracker['item_name']))
             artifacts = tuleap_api.get_tracker_artifacts(parametros, str(tracker['id']))
             #pprint.pprint(artifacts)
-            pprint.pprint(utils.filter_json_array(artifacts, parametros["query_filter"]))
+            final_artifacts.extend(utils.filter_json_array(artifacts, parametros["query_filter"]))
         contador_proyectos = contador_proyectos + 1
         print("Porcentaje de proyectos escaneados " + str(contador_proyectos*100/len(project_member_info)) + "%")
-    return None
+    return final_artifacts

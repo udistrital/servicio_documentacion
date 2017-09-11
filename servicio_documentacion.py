@@ -1,14 +1,19 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from controllers import documento_pago
 from flask_api import status
+import pprint
 
 app = Flask(__name__)
 
 
-@app.route('/documento_mensual/informe_gestion', methods=['GET'])
+@app.route('/documento_mensual/informe_gestion', methods=['POST'])
 def generar_informe_gestion():
-	# parametros = request.get_json()
-	# actividades = generar_documento_pago(parametros)
+	parametros = request.get_json(force = True)
+	#pprint.pprint(parametros)
+	actividades = documento_pago.generar_documento_pago(parametros)
+	#pprint.pprint(actividades)
+	if actividades:
+		return jsonify(actividades)
 	try:
 		return render_template('informe_gestion/template_informe_gestion.html')
 	except:
@@ -50,4 +55,4 @@ def generar_cumplido():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', debug=True)
