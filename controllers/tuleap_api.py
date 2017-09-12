@@ -55,7 +55,7 @@ def get_tracker_artifacts(parametros, tracker_id):
     #requests_params = {"query":json.dumps({"artifact_id":"14919"})}
     #requests_params = {"query":build_query_object(parametros["query"], tracker_id)}
     request = requests.get(url=request_url, headers=request_headers, params=requests_params)
-    print("Peticion " + request.url)
+    #print("Peticion " + request.url)
     tracker_artifacts = request.json()
     # pprint.pprint(tracker_artifacts)
     return tracker_artifacts
@@ -86,7 +86,7 @@ def send_comment_tuleap(parametros, comentario, artifact_id):
     payload["comment"]["format"] = "text"
     payload["comment"]["body"] = comentario
     payload["values"] = []
-    pprint.pprint(payload)
+    #pprint.pprint(payload)
     request_headers = {"Content-type" : "application/json",
     "X-Auth-Token":str(parametros["user_data"]["token"]),
     "X-Auth-UserId":str(parametros["user_data"]["user_id"])}

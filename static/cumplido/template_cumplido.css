@@ -1,0 +1,37 @@
+@page {
+    margin-left: 1.18in;
+    margin-right: 1.18in;
+    margin-top: 0.91in;
+    margin-bottom: 0.91in
+}
+
+p.title {
+    text-align: center;
+    font-family: "Calibri";
+    font-size: 15pt;
+    font-weight: bold;
+    margin-bottom: 5%;
+    text-transform: uppercase
+}
+
+p.subtitle {
+    text-align: center;
+    font-family: "Calibri";
+    font-size: 14pt;
+}
+
+p.paragraph {
+    font-family: "Calibri";
+    font-size: 14px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+upp {
+    text-transform: uppercase
+}
+
+uppb {
+    text-transform: uppercase;
+    font-weight: bold;
+}

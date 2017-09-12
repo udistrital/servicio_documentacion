@@ -1,0 +1,89 @@
+{
+  "1030577784": {
+    "rotulo": "Sr",
+    "nombre_completo": "Fabio Andres Parra Fuentes",
+    "documento": {
+      "tipo": "Cedula de Ciudadania",
+      "numero": "1030577784",
+      "ciudad": "Bogota"
+    },
+    "valor_mensual": {
+      "formato_moneda": 3393498
+    },
+    "cuenta": {
+      "tipo": "Ahorros",
+      "numero": "602-315049-93",
+      "banco": "Bancolombia"
+    },
+    "contrato": {
+      "numero": "598",
+      "fecha": "07 de Febrero de 2017",
+      "cdp": {
+        "numero": " 804",
+        "fecha": "01 de Febrero de 2017"
+      },
+      "rp": {
+        "numero": " 630",
+        "fecha": "10 de Febrero de 2017"
+      }
+    }
+  },
+  "1136886163": {
+    "rotulo": "Sra",
+    "nombre_completo": "Maria Alejandra Ortiz Mora",
+    "documento": {
+      "tipo": "Cedula de Ciudadania",
+      "numero": "1136886163",
+      "ciudad": "Bogota"
+    },
+    "valor_mensual": {
+      "formato_moneda": 2068395
+    },
+    "cuenta": {
+      "tipo": "Ahorros",
+      "numero": "229-097842-08",
+      "banco": "Bancolombia"
+    },
+    "contrato": {
+      "numero": "598",
+      "fecha": "05 de Octubre de 2016",
+      "cdp": {
+        "numero": " 804",
+        "fecha": "01 de Febrero de 2017"
+      },
+      "rp": {
+        "numero": " 630",
+        "fecha": "10 de Febrero de 2017"
+      }
+    }
+  },
+  "1013611972": {
+    "rotulo": "Sr",
+    "nombre_completo": "Fabian Dario Sanchez Leon",
+    "documento": {
+      "tipo": "Cedula de Ciudadania",
+      "numero": "1013611972",
+      "ciudad": "Bogota"
+    },
+    "valor_mensual": {
+      "formato_moneda": 2068395
+    },
+    "cuenta": {
+      "tipo": "Ahorros",
+      "numero": "402-601373-54",
+      "banco": "Bancolombia"
+    },
+    "contrato": {
+      "numero": "598",
+      "fecha": "07 de Febrero de 2017",
+      "cdp": {
+        "numero": " 804",
+        "fecha": "01 de Febrero de 2017"
+      },
+      "rp": {
+        "numero": " 630",
+        "fecha": "10 de Febrero de 2017"
+      }
+    }
+  }
+}
