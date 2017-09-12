@@ -16,5 +16,7 @@ setup(name='servicio_documentacion',
           'requests',
           'iso8601',
           'flask_api',
+          'pdfkit',
+          'django-wkhtmltopdf',
       ],
       zip_safe=False)
