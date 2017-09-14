@@ -28,7 +28,7 @@ class TuleapService(Resource):
     def get(self):
         return "Servicio activo", status.HTTP_200_OK
 
-api.add_resource(TuleapService, '/tuleap_ervice')
+api.add_resource(TuleapService, '/tuleap_service')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True ,port=int(parametros["appport"]))
