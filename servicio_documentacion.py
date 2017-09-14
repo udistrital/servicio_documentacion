@@ -126,6 +126,7 @@ def datos_informe():
 	informe_data["dia_final"]="30"
 	informe_data["mes"]="septiembre"
 	informe_data["vigencia"]="2017"
+	informe_data["dia_informe"]=29
 
 	jefe_data={}
 	jefe_data["nombre_completo"]="Beatriz Jaramillo"
@@ -156,4 +157,4 @@ def datos_contratista(identificacion):
 		return {}
 
 if __name__ == '__main__':
-	app.run( debug=True)
+	app.run(host='0.0.0.0', debug=True)

@@ -4,11 +4,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>CUMPLIDO</title>
-    <meta name="created" content="2014-03-13T21:40:00" />
-    <meta name="changed" content="2017-08-11T14:11:21.008558434" />
-
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='cumplido/template_cumplido.css') }}">
-    <link rel="stylesheet" type="text/css" href="http:localhost/documentos_mensuales/cumplido/template_cumplido.css">
+    <link rel="stylesheet" type="text/css" href="http://10.20.2.105/documentos_mensuales/cumplido/template_cumplido.css">
 </head>
 
 <body lang="es-ES" text="#00000a" dir="ltr">
@@ -25,7 +22,7 @@
         <uppb>{{usuario.nombre_completo}}</uppb>, identificado con la {{usuario.documento.tipo}} No.
         <currency>{{usuario.documento.numero}}</currency> de {{usuario.documento.ciudad}}, cumplió a satisfacción con el objeto establecido en el <b>Contrato de Prestación de Servicios No.</b> {{usuario.contrato.numero}} de {{usuario.contrato.fecha}} que tiene disponibilidad presupuestal No.
         {{usuario.contrato.cdp.numero}} del {{usuario.contrato.cdp.fecha}}, certificado de registro presupuestal No. {{usuario.contrato.rp.numero}} del {{usuario.contrato.rp.fecha}} y con el pago reglamentario de los aportes al sistema de seguridad social del
-        <b>1 al 30 de agosto de 2017.</b></p>
+        <b>{{informe.dia_inicial}} al {{informe.dia_final}} de {{informe.mes}} de {{informe.vigencia}}.</b></p>
 
     <p class="paragraph">Con afectación a la fuente de financiamiento Distribución Punto Adicional CREE</p>
     <p class="paragraph">
@@ -39,7 +36,7 @@
     </p>
     <p class="paragraph"><b><uppb>Cuenta {{usuario.cuenta.tipo}}:</uppb> No. {{usuario.cuenta.numero}} del BANCO <uppb>{{usuario.cuenta.banco}}</uppb></b></p>
 
-    <p class="paragraph">Se expide para el trámite de pago ante la <b>DIVISION DE RECURSOS FINANCIEROS </b>a los treinta (30) días del mes de {{informe.mes}} de 2017.</p>
+    <p class="paragraph">Se expide para el trámite de pago ante la <b>DIVISION DE RECURSOS FINANCIEROS </b>a los {{valor_letras(informe.dia_informe)}} ({{informe.dia_informe}}) días del mes de {{informe.mes}} de {{informe.vigencia}}.</p>
 
     <br/>
     <p class="subtitle">
@@ -54,10 +51,15 @@
     </p>
     <br><br><br>
 
-    <p class="paragraph" align="left">
-        ------------------------------------------------
-    </p>
-    <b>Firma del contratista</b>
+    <div class="firm">
+        <p class="paragraph">
+            <br> Firma del contratista
+        </p>
+    </div>
+
+
+
+
 
 </body>
 
