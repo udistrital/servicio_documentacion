@@ -31,4 +31,4 @@ class TuleapService(Resource):
 api.add_resource(TuleapService, '/tuleap_ervice')
 
 if __name__ == '__main__':
-    app.run(debug=True ,port=int(parametros["appport"]))
+    app.run(host='0.0.0.0',debug=True ,port=int(parametros["appport"]))
