@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_api import status
 from flask_restful import Resource, Api
 from controllers import tuleap_api, comment_tuleap_from_github
 from controllers import text_tool, appconf
@@ -9,7 +10,7 @@ api = Api(app)
 todos = {}
 parametros = appconf.parametros
 class TuleapService(Resource):
-    def put(self, artifact_id):
+    def put(self):
         print(parametros)
         parametros["user_data"] = tuleap_api.autenticar_tuleap(parametros)
         hookGitData = request.get_json(force = True) 
@@ -24,7 +25,10 @@ class TuleapService(Resource):
              
         return hookGitData["commits"]
 
-api.add_resource(TuleapService, '/tuleapService/<string:artifact_id>')
+    def get(self):
+        return "Servicio activo", status.HTTP_200_OK
+
+api.add_resource(TuleapService, '/tuleap_ervice')
 
 if __name__ == '__main__':
-    app.run(debug=True ,port=int(parametros["appport"]))
+    app.run(host='0.0.0.0',debug=True ,port=int(parametros["appport"]))
