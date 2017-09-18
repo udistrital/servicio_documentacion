@@ -18,6 +18,14 @@ p.subtitle {
     text-align: center;
     font-family: "Arial";
     font-size: 13pt;
+    font-weight: bold;
+}
+
+p.titleig {
+    text-align: center;
+    font-family: "Arial";
+    font-size: 11pt;
+    font-weight: bold;
 }
 
 p.paragraph {
@@ -41,4 +49,28 @@ upp {
 uppb {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.tinforme th {
+    background-color: #22A7F0;
+    color: #FFF
+}
+
+.tinforme,
+.tinforme th,
+.tinforme tr td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.firmas {
+    text-align: center center;
+}
+
+.theader {
+    text-align: left !important;
+    border: 1px solid #FFF !important;
+    width: 60% !important;
 }

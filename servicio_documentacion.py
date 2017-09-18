@@ -14,22 +14,9 @@ ruta_servicios="http://127.0.0.1:5000/"
 app = Flask(__name__)
 app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
 
-@app.route('/documento_mensual/informe_gestion', methods=['POST'])
+@app.route('/documento_mensual/informe_gestion', methods=['GET'])
 def generar_informe_gestion():
-	try:
-		parametros = request.get_json(force = True)
-		#pprint.pprint(parametros)
-		actividades = documento_pago.generar_documento_pago(parametros)
-		#pprint.pprint(actividades)
-	except:
-		actividades = None
-
-	if actividades:
-		return jsonify(actividades)
-	try:
-		return render_template('informe_gestion/template_informe_gestion.html',usuario=usuario_data)
-	except:
-		return "No generado", status.HTTP_404_NOT_FOUND
+	return render_template('informe_gestion/template_informe_gestion.html')
 
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
