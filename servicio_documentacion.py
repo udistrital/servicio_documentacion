@@ -34,8 +34,9 @@ app = Flask(__name__)
 app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
 parametrosBase = appconf.parametros
 
-@app.route('/documento_mensual/informe_gestion', methods=['POST'])
+@app.route('/documento_mensual/informe_gestion', methods=['GET'])
 def generar_informe_gestion():
+
 	try:
 		parametros_body = request.get_json(force = True)
 		logger.info("Body recuperado")
@@ -59,7 +60,6 @@ def generar_informe_gestion():
 	except:
 		logger.error("Plantilla de gestion no renderizada")
 		return "No generado", status.HTTP_404_NOT_FOUND
-
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
 def generar_cumplido_masivo():
