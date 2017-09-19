@@ -51,8 +51,12 @@ uppb {
     font-weight: bold;
 }
 
+.underline {
+    border-bottom: 1px solid #000 !important;
+}
+
 .tinforme th {
-    background-color: #22A7F0;
+    background-color: #1F3A93;
     color: #FFF
 }
 
@@ -63,14 +67,25 @@ uppb {
     border-collapse: collapse;
     text-align: center;
     vertical-align: middle;
+    font-family: "Calibri";
+    font-size: 10pt;
 }
 
-.firmas {
-    text-align: center center;
+.firmas,
+.firmas th,
+.firmas tr td {
+    text-align: center;
+    vertical-align: middle;
 }
 
 .theader {
     text-align: left !important;
     border: 1px solid #FFF !important;
     width: 60% !important;
+    font-family: "Calibri";
+    font-size: 10pt;
+}
+
+.space {
+    width: 50%;
 }
