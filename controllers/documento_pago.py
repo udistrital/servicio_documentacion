@@ -2,7 +2,7 @@
 import pprint
 from controllers import tuleap_api, utils
 
-def generar_documento_pago(parametros):
+def obtener_artefactos(parametros):
     parametros["url_base_tuleap"]="https://tuleap.udistrital.edu.co/api/"
     project_string_key = "_project"
     user_data = tuleap_api.autenticar_tuleap(parametros)

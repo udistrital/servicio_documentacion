@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, make_response
-from controllers import documento_pago, numero_a_letras
+from controllers import documento_pago, numero_a_letras, appconf
 from flask_api import status
 import pprint
 import sys
@@ -7,17 +7,59 @@ import requests
 import json
 import pdfkit
 import glob, os
+import logging
 
 ruta_archivos="/srv/http/documentos_mensuales/"
 ruta_servicios="http://127.0.0.1:5000/"
 
+# create logger
+logger = logging.getLogger('Logger App')
+level = logging.DEBUG
+logger.setLevel(level)
+
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(level)
+
+# create formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# add formatter to ch
+ch.setFormatter(formatter)
+
+# add ch to logger
+logger.addHandler(ch)
+
 app = Flask(__name__)
 app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
+parametrosBase = appconf.parametros
 
 @app.route('/documento_mensual/informe_gestion', methods=['GET'])
 def generar_informe_gestion():
-	return render_template('informe_gestion/template_informe_gestion.html')
 
+	try:
+		parametros_body = request.get_json(force = True)
+		logger.info("Body recuperado")
+		logger.debug(pprint.pformat(parametros_body))
+		parametros = parametros_body
+		logger.debug("Parametros:")
+		logger.debug(pprint.pformat(parametros))
+		actividades = documento_pago.obtener_artefactos(parametros)
+		logger.debug("Actividades:")
+		logger.debug(pprint.pformat(actividades))
+	except:
+		logger.error("Error en obtencion de body")
+		actividades = None
+
+	if actividades:
+		logger.info("Actividades enviadas")
+		return jsonify(actividades)
+	try:
+		logger.info("Plantilla de gestion renderizada")
+		return render_template('informe_gestion/template_informe_gestion.html',usuario=usuario_data)
+	except:
+		logger.error("Plantilla de gestion no renderizada")
+		return "No generado", status.HTTP_404_NOT_FOUND
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
 def generar_cumplido_masivo():
@@ -118,4 +160,4 @@ def datos_contratista(identificacion):
 		return {}
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', debug=True)
+	app.run(host='0.0.0.0', debug=True, port=int(parametrosBase["appport"]))
