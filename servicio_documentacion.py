@@ -34,7 +34,7 @@ app = Flask(__name__)
 app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
 parametrosBase = appconf.parametros
 
-@app.route('/documento_mensual/informe_gestion', methods=['GET'])
+@app.route('/documento_mensual/informe_gestion', methods=['POST'])
 def generar_informe_gestion():
 
 	try:
@@ -53,13 +53,16 @@ def generar_informe_gestion():
 
 	if actividades:
 		logger.info("Actividades enviadas")
-		return jsonify(actividades)
-	try:
+		#return jsonify(actividades)
+		usuario_data = datos_contratista("1030577784")
+		#try:
 		logger.info("Plantilla de gestion renderizada")
-		return render_template('informe_gestion/template_informe_gestion.html',usuario=usuario_data)
-	except:
-		logger.error("Plantilla de gestion no renderizada")
-		return "No generado", status.HTTP_404_NOT_FOUND
+		return render_template('informe_gestion/template_informe_gestion.html',usuario=usuario_data, tamano_actividades=len(actividades), actividades=actividades)
+		# except:
+		# 	logger.error("Plantilla de gestion no renderizada")
+		# 	return "No generado", status.HTTP_404_NOT_FOUND
+	logger.error("Plantilla de gestion no renderizada")
+	return "No generado", status.HTTP_404_NOT_FOUND
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
 def generar_cumplido_masivo():
