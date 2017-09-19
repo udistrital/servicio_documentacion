@@ -81,11 +81,16 @@ uppb {
 .theader {
     text-align: left !important;
     border: 1px solid #FFF !important;
-    width: 60% !important;
+    width: 100%;
     font-family: "Calibri";
     font-size: 10pt;
 }
 
 .space {
     width: 50%;
+}
+
+.logoudig {
+    margin-top: -70px;
+    width: 110px;
 }
