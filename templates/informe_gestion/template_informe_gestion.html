@@ -9,71 +9,72 @@
     <meta name="created" content="2015-05-14T21:53:44" />
     <meta name="changed" content="2017-08-11T14:26:53.951034717" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='assets/template_cumplido.css') }}">
-    <link rel="stylesheet" type="text/css" href="http://10.20.2.105/documentos_mensuales/cumplido/template_cumplido.css">
+    <link rel="stylesheet" type="text/css" href="http://10.20.2.105/documentos_mensuales/assets/template_cumplido.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body>
     <p class="titleig">
-        UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS<br>INFORME DE GESTIÓN 2017<br> CONTRATO DE PRESTACIÓN DE SERVICIOS C.P.S. No 598 de 2017
+        UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS<br>INFORME DE GESTIÓN 2017<br> CONTRATO DE PRESTACIÓN DE SERVICIOS C.P.S. No {{usuario.contrato.numero}} de 2017
     </p>
+
     <div class="row">
         <div class="col-md-8 col-md-offset-1">
             <table class="theader">
                 <tr>
-                    <td>
-                        NOMBRE:
-                    </td>
-                    <td>
-                        Fabio Andrés Parra Fuentes
-                    </td>
-                    <td>
-                        No. DE DOCUMENTO DE IDENTIDAD:
-                    </td>
-                    <td>
-                        1030577784 de Bogotá
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        DEPENDENCIA:
-                    </td>
-                    <td>
-                        OFICINA ASESORA DE SISTEMAS
-                    </td>
-                    <td>
-                        SEDE:
-                    </td>
-                    <td>
-                        ADMINISTRATIVA
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        CUMPLIDO DEL MES:
-                    </td>
-                    <td>
-                        Agosto de 2017
-                    </td>
-                    <td>
-                        FECHA DE INICIO DEL CONTRATO:
-                    </td>
-                    <td>
-                        10 de Febrero de 2017
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        FECHA DE FINALIZACIÓN:
-                    </td>
-                    <td>
-                        09 de Enero de 2018
-                    </td>
-                </tr>
+                  <td>
+                      NOMBRE:
+                  </td>
+                  <td>
+                      {{usuario.nombre_completo}}
+                  </td>
+                  <td>
+                      No. DE DOCUMENTO DE IDENTIDAD:
+                  </td>
+                  <td>
+                      {{usuario.documento.numero}} de {{usuario.documento.ciudad}}
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      DEPENDENCIA:
+                  </td>
+                  <td>
+                      OFICINA ASESORA DE SISTEMAS
+                  </td>
+                  <td>
+                      SEDE:
+                  </td>
+                  <td>
+                      ADMINISTRATIVA
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      CUMPLIDO DEL MES:
+                  </td>
+                  <td>
+                      Agosto de 2017
+                  </td>
+                  <td>
+                      FECHA DE INICIO DEL CONTRATO:
+                  </td>
+                  <td>
+                      10 de Febrero de 2017
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                      FECHA DE FINALIZACIÓN:
+                  </td>
+                  <td>
+                      09 de Enero de 2018
+                  </td>
+            </tr>
             </table>
         </div>
         <div class="col-md-3">
@@ -91,35 +92,19 @@
                 <th>NIVEL DE AVANCE</th>
                 <th>OBSERVACIONES</th>
             </tr>
+            {% for actividad in actividades %}
             <tr>
-                <td rowspan="3">OBJETO DE CONTRATO</td>
-                <td> Corrección de la publicación de la documentación de los servicios Rest publicados mediante wagger, así como la disposición de un cliente de swagger ui para el consumo de dicha documentación.<br>Ajuste de la estabilidad de la aplicación
-                    de notificaciones centralizadas.
-                </td>
-                <td> Se generaliza el funcionamiento de los jobs de despliegue de Jenkins, además de la capacitación al encargado del área Administrativa para los despliegues.
-                </td>
-                <td>3 servicios existente/1 servicios generalizado<br>1 modelo de base de datos/1 moodelo de base de datos automatizado<br>1 capacitación/1 capacitación dictada
-                </td>
-                <td><b> 84%</b></td>
-                <td> Kanbantask #13758<br>ajustes_desarrollo #13770<br>ajustes_desarrollo #13773<br>ajustes_desarrollo #14690
-                </td>
+                {% if loop.index == 1 %}
+                <td rowspan="{{tamano_actividades}}">{{usuario.contrato.objeto}}</td>
+                {% endif %}
+                <td> {{actividad.title}} </td>
+                <td>  </td>
+                <td>  </td>
+                <td>  </td>
+                <td> {{actividad.id}} </td>
             </tr>
-            <tr>
-                <td> Diseño inicial de la migración de Disponibilidades presupuestales que tengan o no una solicitud de necesidad hecha en el sistema SiCapital.</td>
-                <td> Migrar los datos del módulo Gestión de Apropiación Presupuestal de SiCapital al nuevo ERP.</td>
-                <td>Migración de disponibilidades/1 migración diseñada</td>
-                <td><b> 30%</b></td>
-                <td> Kanbantask #13765<br>ajustes_desarrollo #14470
-                </td>
-            </tr>
-            <tr>
-                <td> Capacitación sobre despliegues de aplicaciones y migraciones de datos usando Talend Studio.<br>Despliegue de aplicaciones de terceros en el servidor de pruebas.
-                </td>
-                <td> Atender otras actividades designadas por el supervisor del contrato en el marco de la misión de la OAS</td>
-                <td>1 Capacitación/1 capacitación dictada<br>Aplicaciones de otras areas/3 aplicaciones deplegadas</td>
-                <td><b> 72%</b></td>
-                <td> Kanbantask #13751<br>Kanbantask #13757</td>
-            </tr>
+            {% endfor %}
+
     </table>
     <br><br><br>
     <center>
