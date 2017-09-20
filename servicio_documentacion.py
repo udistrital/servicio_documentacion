@@ -9,8 +9,15 @@ import pdfkit
 import glob, os
 import logging
 
-ruta_archivos="/srv/http/documentos_mensuales/"
-ruta_servicios="http://127.0.0.1:5000/"
+# Definicion de rutas estaticas
+ruta_archivos				= "/srv/http/documentos_mensuales/"
+host_archivos				= "http://127.0.0.1/documentos_mensuales/"
+ruta_assets					= "assets/"
+ruta_servicios				= "http://127.0.0.1:5000/"
+prefijo_cumplido			= "cumplido/"
+prefijo_informe_gestion		= "informe_gestion/"
+template_cumplido			= "cumplido/template_cumplido.html"
+template_informe_gestion	= "informe_gestion/template_informe_gestion.html"
 
 # create logger
 logger = logging.getLogger('Logger App')
@@ -30,63 +37,122 @@ ch.setFormatter(formatter)
 # add ch to logger
 logger.addHandler(ch)
 
+#Creacion del app con flask
 app = Flask(__name__)
-app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras) 
+
+#Inclusion de la funcion numero_a_letras con alias de valor_letras
+app.jinja_env.globals.update(valor_letras=numero_a_letras.numero_a_letras)
+
+#Obtencion de los parametros pasados al script de python
 parametrosBase = appconf.parametros
 
 @app.route('/documento_mensual/informe_gestion', methods=['POST'])
 def generar_informe_gestion():
-
+	"""
+	Funcion para generar el informe de gestion de forma masiva, método POST
+	recibe nombre de usuario y contraseña, ademas de query_filter
+	Returns:
+		200 si es exitoso, 404 de lo contrario.
+	"""
 	try:
+		#Obtencion del body de la peticion
 		parametros_body = request.get_json(force = True)
 		logger.info("Body recuperado")
 		logger.debug(pprint.pformat(parametros_body))
 		parametros = parametros_body
 		logger.debug("Parametros:")
 		logger.debug(pprint.pformat(parametros))
+
+		#Obtencion de las actividades filtradas con el query filter
 		actividades = documento_pago.obtener_artefactos(parametros)
 		logger.debug("Actividades:")
 		logger.debug(pprint.pformat(actividades))
+
 	except:
+		#Error en la generacion de las actividades
 		logger.error("Error en obtencion de body")
 		actividades = None
 
 	if actividades:
 		logger.info("Actividades enviadas")
 		#return jsonify(actividades)
-		usuario_data = datos_contratista("1030577784")
-		#try:
+		identificacion = "1030577784"
+		#Obtencion de la informacion del contratista por medio de los servicios expuestos
+		usuario_data = datos_contratista(identificacion)
+		informe_data = datos_informe()
+
 		logger.info("Plantilla de gestion renderizada")
-		return render_template('informe_gestion/template_informe_gestion.html',usuario=usuario_data, tamano_actividades=len(actividades), actividades=actividades)
-		# except:
-		# 	logger.error("Plantilla de gestion no renderizada")
-		# 	return "No generado", status.HTTP_404_NOT_FOUND
+		
+		fname = ruta_archivos+prefijo_informe_gestion+informe_data["informe"]["vigencia"]+"/"+informe_data["informe"]["mes"]+"/"+str(identificacion)+".html"
+
+		# Escritura sobre el archivo
+		with open(fname, 'w') as f:
+			html = render_template(template_informe_gestion, usuario=usuario_data, tamano_actividades=len(actividades), actividades=actividades, jefe=informe_data["jefe"], informe=informe_data["informe"])
+			f.write(html)
+		# Retorno de la plantilla renderizada con los datos proveidos
+		return "Generación exitosa", status.HTTP_200_OK
+		
 	logger.error("Plantilla de gestion no renderizada")
 	return "No generado", status.HTTP_404_NOT_FOUND
 
 @app.route('/documento_mensual/cumplido', methods=['GET'])
 def generar_cumplido_masivo():
+	"""
+	Funcion para generar los cumplidos de todos los contratistas registrados en la base de datos de la oficina
+	Returns:
+		200 si es exitoso, 406 de lo contrario.
+	"""
+	try:
+		# Obtencion de los datos almacenados de contratistas a quienes se les generara el informe
+		with open('datos_temp/base_datos_oas.json') as data_file:
+			data = json.load(data_file)
+		
+		# Iteracion de los contratistas
+		for contratista in data["contratistas"]:
+			logger.debug(pprint.pformat(contratista))
+			# Generacion individual de el cumplido
+			generar_cumplido_individual(contratista["id"])
 
-	with open('datos_temp/base_datos_oas.json') as data_file:
-		data = json.load(data_file)
-	
-	for contratista in data["contratistas"]:
-		pprint.pprint(contratista)
-		generar_cumplido_individual(contratista["id"])
-
-	return "Generación exitosa", status.HTTP_200_OK
+		return "Generación exitosa", status.HTTP_200_OK
+	except:
+		return "Error", HTTP_406_NOT_ACCEPTABLE
 
 @app.route('/documento_mensual/cumplido/<string:identificacion>', methods=['GET'])
-def get_generar_cumplido_individual(identificacion):
-	if generar_cumplido_individual(identificacion):
+def generar_cumplido_individual(identificacion):
+	"""
+	Funcion para generar el cumplido de un solo contratista
+	Args:
+		identificacion: numero .
+
+        Returns:
+            200 si es exitoso, 406 de lo contrario.
+	"""
+	try:
+		logger.info("Cumplido Individual de "+identificacion)
+		
+		# Obtencion de datos de contratista y de informe
+		usuario_data = datos_contratista(identificacion)
+		informe_data = datos_informe()
+		logger.debug("Informe data:")
+		logger.debug(pprint.pformat(informe_data))
+
+		# Ruta del archivo que se guardara
+		fname = ruta_archivos+prefijo_cumplido+informe_data["informe"]["vigencia"]+"/"+informe_data["informe"]["mes"]+"/"+str(identificacion)+".html"
+		
+		logger.debug("Ruta: "+fname)
+		
+		# Escritura sobre el archivo
+		with open(fname, 'w') as f:
+			html = render_template(template_cumplido, usuario=usuario_data, jefe=informe_data["jefe"], informe=informe_data["informe"])
+			f.write(html)
+
 		return "Generación exitosa", status.HTTP_200_OK
-	else:
+	except:
 		return "Error", HTTP_406_NOT_ACCEPTABLE
 
 @app.route('/datos_informe', methods=['GET'])
 def get_datos_informe():
 	return jsonify(datos_informe())
-
 
 
 @app.route('/datos_contratista/<string:identificacion>', methods=['GET'])
@@ -139,18 +205,6 @@ def datos_informe():
 	jefe_data["cargo"]="Jefe Asesora de Sistemas"
 	print("Datos informe")
 	return {"informe":informe_data,"jefe":jefe_data}
-
-def generar_cumplido_individual(identificacion):
-	print("Individual de "+identificacion)
-	usuario_data = datos_contratista(identificacion)
-	informe_data = datos_informe()
-	pprint.pprint(informe_data)
-	fname = ruta_archivos+"cumplido/"+informe_data["informe"]["vigencia"]+"/"+informe_data["informe"]["mes"]+"/"+str(identificacion)+".html"
-	print("Ruta: "+fname)
-	with open(fname, 'w') as f:
-		html = render_template('cumplido/template_cumplido.html', usuario=usuario_data, jefe=informe_data["jefe"], informe=informe_data["informe"])
-		f.write(html)
-	return True
 
 def datos_contratista(identificacion):
 	print("Datos contratista "+identificacion)
