@@ -152,11 +152,21 @@ def generar_cumplido_individual(identificacion):
 
 @app.route('/datos_informe', methods=['GET'])
 def get_datos_informe():
+	"""
+	Funcion para obtener los datos del informe actual
+	Return:
+		Datos del informe en formato JSON
+	"""
 	return jsonify(datos_informe())
 
 
 @app.route('/datos_contratista/<string:identificacion>', methods=['GET'])
 def get_datos_contratista(identificacion):
+	"""
+	Funcion para obtener los datos del contratista con base a su identificacion
+	Return:
+		Datos del contratista en formato JSON en el caso existoso, un JSON vacio de lo contrario.
+	"""
 	try:
 		return jsonify(datos_contratista(identificacion))
 	except:
@@ -164,6 +174,8 @@ def get_datos_contratista(identificacion):
 
 @app.route('/documento_mensual/cumplido_pdf', methods=['POST'])
 def get_html_to_pdf_masivo():
+	"""
+	"""
 	parametros = None
 	try:
 		parametros = request.get_json(force = True)

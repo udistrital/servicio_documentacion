@@ -10,7 +10,7 @@ api = Api(app)
 todos = {}
 parametros = appconf.parametros
 class TuleapService(Resource):
-    def put(self):
+    def post(self):
         print(parametros)
         parametros["user_data"] = tuleap_api.autenticar_tuleap(parametros)
         hookGitData = request.get_json(force = True) 
