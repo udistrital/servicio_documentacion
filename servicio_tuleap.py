@@ -16,7 +16,7 @@ class TuleapService(Resource):
         hookGitData = request.get_json(force = True) 
         for commitInfo in hookGitData["commits"]:
             try:
-                comment = text_tool.format_comment_by_expr(commitInfo["message"], '#(.+?)# ', '')
+                comment = text_tool.format_comment_by_expr(commitInfo["message"].encode("utf-8"), '#(.+?)# ', '')
                 if comment["artifact_id"]:
                     artifact_id = comment["artifact_id"]
                     print "Artifact # --" + str(artifact_id)+"--"
