@@ -24,7 +24,7 @@ class TuleapService(Resource):
                 else:
                     print "No hay Artifact asociado"
             except:
-                print "No hay Artifact asociado"
+                print "No hay Artifact asociado error inesperado"
              
         return hookGitData["commits"]
 
