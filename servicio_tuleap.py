@@ -16,15 +16,16 @@ class TuleapService(Resource):
         hookGitData = request.get_json(force = True) 
         for commitInfo in hookGitData["commits"]:
             try:
-                comment = text_tool.format_comment_by_expr(commitInfo["message"].encode("utf-8"), '#(.+?)# ', '')
+                comment = text_tool.format_comment_by_expr(str(commitInfo["message"])),'#(.+?)# ', '',commitInfo)
                 if comment["artifact_id"]:
                     artifact_id = comment["artifact_id"]
-                    print "Artifact # --" + str(artifact_id)+"--"
-                    print "Status "+str(tuleap_api.send_comment_tuleap(parametros, str(comment["message"]), str(artifact_id)))
+                    print('Artifact # --'+ str(artifact_id)+'--')
+                    print("Status "+str(tuleap_api.send_comment_tuleap(parametros, str(comment["message"]), str(artifact_id))))
                 else:
-                    print "No hay Artifact asociado"
-            except:
-                print "No hay Artifact asociado error inesperado"
+                    print("No hay Artifact asociado")
+            except Exception as inst:
+                print("No hay Artifact asociado error inesperado")
+                print(inst)
              
         return hookGitData["commits"]
 
